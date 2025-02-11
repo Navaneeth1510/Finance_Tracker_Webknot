@@ -33,9 +33,14 @@ public class FinanceController {
         return fitnessService.addEntry(fitness);
     }
 
-    @PutMapping("/{id}/{amount}")
-    public FinanceEntity updateEntry(@PathVariable Long id , Double amount){
-        return fitnessService.updateEntry(id, amount);
+    @PutMapping("/{id}")
+    public FinanceEntity updateEntry(@PathVariable Long id, @RequestBody FitnessDto update){
+        return fitnessService.updateEntry(id, update);
+    }
+
+    @DeleteMapping("/{id}")
+    public boolean deleteEntry(@PathVariable Long id){
+        return fitnessService.deleteEntry(id);
     }
 
 

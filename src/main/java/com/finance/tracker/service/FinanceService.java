@@ -34,14 +34,21 @@ public class FinanceService {
         return entry.getId();
     }
 
-    public FinanceEntity updateEntry(Long id, double amount){
-        FinanceEntity fitness = financeRepo.findById(id).orElse(null);
-        assert fitness != null;
-        fitness.setDate(fitness.getDate());
-        fitness.setCategory(fitness.getCategory());
-        fitness.setDescription(fitness.getDescription());
-        fitness.setAmount(amount);
-        FinanceEntity fund =financeRepo.save(fitness);
-        return fund;
+    public FinanceEntity updateEntry(Long id, FitnessDto fitness){
+        FinanceEntity record = financeRepo.findById(id).orElse(null);
+        record.setAmount(fitness.getAmount());
+        record.setDescription(fitness.getDescription());
+        record.setDate(fitness.getDate());
+        record.setCategory(fitness.getCategory());
+        financeRepo.save(record);
+        return record;
+    }
+
+    public boolean deleteEntry(Long id){
+        if(financeRepo.existsById(id)){
+           financeRepo.deleteById(id);
+           return true;
+        }
+        return false;
     }
 }
